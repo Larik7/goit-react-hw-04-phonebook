@@ -4,11 +4,22 @@ import { ContactList } from "./ContactList/ContactList";
 import { Filter } from "./Filter/Filter";
 import { Layout } from "./Layout";
 
-
+const getContact = () => {
+    const saveContacts = localStorage.getItem('contacts');
+    if (saveContacts) {
+      const parsedContacts = JSON.parse(saveContacts);
+      return parsedContacts;
+    }
+  }
 
 export const App = () => {
   const [contacts, setContacts] = useState(getContact());
   const [filter, setFilter] = useState('');
+
+  useEffect(() => {
+    localStorage.setItem('contacts', JSON.stringify(contacts));
+  }, [contacts]);
+
 
   const addContact = newContact => {
     const findName = newContact.name.toLowerCase();
@@ -19,18 +30,6 @@ export const App = () => {
 
     setContacts(prevState => [...prevState.contacts, newContact]);
   }
-
-  const getContact = () => {
-    const saveContacts = localStorage.getItem('contacts');
-    if (saveContacts) {
-      const parsedContacts = JSON.parse(saveContacts);
-      return parsedContacts;
-    }
-  }
-  
-  useEffect(() => {
-    localStorage.setItem('contacts', JSON.stringify(contacts));
-  }, [contacts]);
 
   const deleteContact = contactId => {
     setContacts(prevState => prevState.filter(contact => contact.id !== contactId));
@@ -43,7 +42,7 @@ export const App = () => {
   const getFilter = () => {
     const searchFilter = filter.toLowerCase();
     return contacts.filter(contact =>
-      contact.name.toLowerCase().includes(filter)
+      contact.name.toLowerCase().includes(searchFilter)
     );
   };
   
