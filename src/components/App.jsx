@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import { ContactForm } from "./ContactForm/ContactForm";
 import { ContactList } from "./ContactList/ContactList";
 import { Filter } from "./Filter/Filter";
@@ -39,10 +39,10 @@ export const App = () => {
     setFilter(event.currentTarget.value);
   };
 
-  const getFilter = () => {
-    const searchFilter = filter.toLowerCase();
+   const getFilter = () => {
+    const clearFilter = filter.toLowerCase();
     return contacts.filter(contact =>
-      contact.name.toLowerCase().includes(searchFilter)
+      contact.name.toLowerCase().includes(clearFilter)
     );
   };
   
