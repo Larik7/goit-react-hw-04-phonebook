@@ -1,19 +1,18 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { ContactForm } from "./ContactForm/ContactForm";
 import { ContactList } from "./ContactList/ContactList";
 import { Filter } from "./Filter/Filter";
 import { Layout } from "./Layout";
 
 const getContact = () => {
-    const saveContacts = localStorage.getItem('contacts');
-    if (saveContacts) {
-      const parsedContacts = JSON.parse(saveContacts);
-      return parsedContacts;
-    }
-  }
+  const saveContacts = localStorage.getItem('contacts');
+  const parsedContacts = JSON.parse(saveContacts);
+  return parsedContacts ? parsedContacts : [];
+  
+};
 
 export const App = () => {
-  const [contacts, setContacts] = useState(getContact());
+  const [contacts, setContacts] = useState(getContact);
   const [filter, setFilter] = useState('');
 
   useEffect(() => {
@@ -39,7 +38,7 @@ export const App = () => {
     setFilter(event.currentTarget.value);
   };
 
-   const getFilter = () => {
+  const getFilter = () => {
     const clearFilter = filter.toLowerCase();
     return contacts.filter(contact =>
       contact.name.toLowerCase().includes(clearFilter)
