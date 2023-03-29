@@ -12,7 +12,7 @@ const getContact = () => {
 };
 
 export const App = () => {
-  const [contacts, setContacts] = useState(getContact);
+  const [contacts, setContacts] = useState(getContact());
   const [filter, setFilter] = useState('');
 
   useEffect(() => {
@@ -27,8 +27,17 @@ export const App = () => {
       return
     }
 
-    setContacts(prevState => [...prevState.contacts, newContact]);
+    setContacts(prevState => [...prevState, newContact]);
   }
+
+  // const addContact = newContact => {
+  //   if (contacts.find(contact => contact.name.toLowerCase() === newContact.name.toLowerCase())) {
+  //     alert(`${newContact.name} is already in contacts`);
+  //     return
+  //   }
+
+  //   setContacts(prevState => [...prevState, newContact]);
+  // }
 
   const deleteContact = contactId => {
     setContacts(prevState => prevState.filter(contact => contact.id !== contactId));
